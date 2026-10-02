@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState, type RefObject } from "react";
 
-export function useReveal<T extends Element = HTMLDivElement>(
+export const useReveal = <T extends Element = HTMLDivElement>(
   threshold = 0.15
-): [RefObject<T | null>, boolean] {
+): [RefObject<T | null>, boolean] => {
   const ref = useRef<T>(null);
   const [visible, setVisible] = useState(false);
   useEffect(() => {
@@ -21,9 +21,9 @@ export function useReveal<T extends Element = HTMLDivElement>(
     return () => observer.disconnect();
   }, [threshold]);
   return [ref, visible];
-}
+};
 
-export function useTypewriter(words: string[], typeSpeed = 48, deleteSpeed = 26, hold = 1600): string {
+export const useTypewriter = (words: string[], typeSpeed = 48, deleteSpeed = 26, hold = 1600): string => {
   const [text, setText] = useState(words[0] ?? "");
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -59,9 +59,9 @@ export function useTypewriter(words: string[], typeSpeed = 48, deleteSpeed = 26,
     return () => clearTimeout(timeoutId);
   }, [words, typeSpeed, deleteSpeed, hold]);
   return text;
-}
+};
 
-export function useCountUp(target: number, start: boolean, duration = 1200): number {
+export const useCountUp = (target: number, start: boolean, duration = 1200): number => {
   const reduced = useRef(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   const [value, setValue] = useState(0);
   useEffect(() => {
@@ -82,9 +82,9 @@ export function useCountUp(target: number, start: boolean, duration = 1200): num
     return () => cancelAnimationFrame(raf);
   }, [start, target, duration]);
   return value;
-}
+};
 
-export function useScrollSpy(ids: string[]): string {
+export const useScrollSpy = (ids: string[]): string => {
   const [active, setActive] = useState(ids[0]);
   useEffect(() => {
     const handler = () => {
@@ -97,19 +97,28 @@ export function useScrollSpy(ids: string[]): string {
           current = id;
         }
       }
+      // On tall screens the last section can't scroll up to the 40% line, so treat the page bottom as reaching it.
+      const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+      if (atBottom && document.getElementById(ids[ids.length - 1])) {
+        current = ids[ids.length - 1];
+      }
       setActive(current);
     };
     window.addEventListener("scroll", handler, { passive: true });
+    window.addEventListener("resize", handler);
     handler();
-    return () => window.removeEventListener("scroll", handler);
+    return () => {
+      window.removeEventListener("scroll", handler);
+      window.removeEventListener("resize", handler);
+    };
   }, [ids]);
   return active;
-}
+};
 
 const SIDEBAR_KEY = "gn-sidebar-collapsed";
 
 /** Desktop sidebar collapsed state, remembered in localStorage. */
-export function useSidebarCollapsed(): [boolean, () => void] {
+export const useSidebarCollapsed = (): [boolean, () => void] => {
   const [collapsed, setCollapsed] = useState(() => {
     try {
       return localStorage.getItem(SIDEBAR_KEY) === "1";
@@ -125,9 +134,9 @@ export function useSidebarCollapsed(): [boolean, () => void] {
     }
   }, [collapsed]);
   return [collapsed, () => setCollapsed((c) => !c)];
-}
+};
 
-export function useScrollProgress(): number {
+export const useScrollProgress = (): number => {
   const [progress, setProgress] = useState(0);
   useEffect(() => {
     const handler = () => {
@@ -140,4 +149,4 @@ export function useScrollProgress(): number {
     return () => window.removeEventListener("scroll", handler);
   }, []);
   return progress;
-}
+};

@@ -7,7 +7,7 @@ export function Connect() {
   return (
     <section id="connect" className="gn-section">
       <Reveal className="gn-connect">
-        <div className="gn-tag">08 —</div>
+        <div className="gn-tag">10 —</div>
         <h2>Ready to build something great together?</h2>
         <p className="gn-hero-bio" style={{ marginTop: "1.2rem" }}>
           Open to new roles in full-stack development, ERP solutions, or QA

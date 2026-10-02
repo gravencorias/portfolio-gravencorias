@@ -210,7 +210,9 @@ export const NAV: NavItem[] = [
   { id: "education", label: "Education", num: "05" },
   { id: "work", label: "Work", num: "06" },
   { id: "honors", label: "Honors", num: "07" },
-  { id: "connect", label: "Connect", num: "08" },
+  { id: "affiliations", label: "Affiliations", num: "08" },
+  { id: "training", label: "Training", num: "09" },
+  { id: "connect", label: "Connect", num: "10" },
 ];
 
 export const CONTACT: Contact = {

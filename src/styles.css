@@ -505,6 +505,8 @@ html, body {
 /* hero visual: status frame */
 .gn-frame {
   position: relative;
+  max-width: 820px;
+  margin-left: auto;
   border: 1px solid var(--line-strong);
   border-radius: 14px;
   padding: 1.1rem;
@@ -955,12 +957,10 @@ html, body {
   color: var(--ink-faint);
 }
 
-/* ---------- honors ---------- */
-.gn-honors-grid {
+/* ---------- honors / affiliations / training ---------- */
+.gn-list {
   margin-top: 2.4rem;
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: clamp(2rem, 5vw, 4rem);
+  max-width: 760px;
 }
 .gn-award-row {
   display: flex;
@@ -1071,7 +1071,7 @@ html, body {
   .gn-main { margin-left: 0; width: 100%; padding-top: 60px; }
   .gn-hero { grid-template-columns: 1fr; min-height: auto; padding-top: 2rem; }
   .gn-hero-ctas, .gn-stats { justify-content: flex-start; }
-  .gn-skills-grid, .gn-honors-grid { grid-template-columns: 1fr; }
+  .gn-skills-grid { grid-template-columns: 1fr; }
   .gn-frame { max-width: 360px; margin: 0 auto; }
   .gn-ledger-row { grid-template-columns: 2rem 1fr; }
   .gn-ledger-period { grid-column: 2; }

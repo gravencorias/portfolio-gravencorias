@@ -7,6 +7,7 @@ import { Grain } from "./components/effects/Grain.tsx";
 import { Footer } from "./components/layout/Footer.tsx";
 import { MobileNav } from "./components/layout/MobileNav.tsx";
 import { Sidebar } from "./components/layout/Sidebar.tsx";
+import { Affiliations } from "./components/sections/Affiliations.tsx";
 import { Connect } from "./components/sections/Connect.tsx";
 import { Education } from "./components/sections/Education.tsx";
 import { Experience } from "./components/sections/Experience.tsx";
@@ -14,6 +15,7 @@ import { Hero } from "./components/sections/Hero.tsx";
 import { Honors } from "./components/sections/Honors.tsx";
 import { Journey } from "./components/sections/Journey.tsx";
 import { Stack } from "./components/sections/Stack.tsx";
+import { Training } from "./components/sections/Training.tsx";
 import { Work } from "./components/sections/Work.tsx";
 
 export default function App() {
@@ -39,6 +41,8 @@ export default function App() {
           <Education />
           <Work />
           <Honors />
+          <Affiliations />
+          <Training />
           <Connect />
           <Footer />
         </main>
