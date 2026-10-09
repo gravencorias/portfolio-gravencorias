@@ -136,6 +136,22 @@ export const useSidebarCollapsed = (): [boolean, () => void] => {
   return [collapsed, () => setCollapsed((c) => !c)];
 };
 
+/** True once the page is scrolled more than `viewports` screen heights down. */
+export const useScrolledPast = (viewports = 0.8): boolean => {
+  const [past, setPast] = useState(false);
+  useEffect(() => {
+    const handler = () => setPast(window.scrollY > window.innerHeight * viewports);
+    window.addEventListener("scroll", handler, { passive: true });
+    window.addEventListener("resize", handler);
+    handler();
+    return () => {
+      window.removeEventListener("scroll", handler);
+      window.removeEventListener("resize", handler);
+    };
+  }, [viewports]);
+  return past;
+};
+
 export const useScrollProgress = (): number => {
   const [progress, setProgress] = useState(0);
   useEffect(() => {

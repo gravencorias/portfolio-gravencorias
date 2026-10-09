@@ -1,6 +1,7 @@
 import "./styles.css";
 import { NAV, ROLES } from "./data.ts";
 import { useScrollProgress, useScrollSpy, useSidebarCollapsed, useTypewriter } from "./hooks.ts";
+import { BackToTop } from "./components/common/BackToTop.tsx";
 import { BootSequence } from "./components/effects/BootSequence.tsx";
 import { CustomCursor } from "./components/effects/CustomCursor.tsx";
 import { Grain } from "./components/effects/Grain.tsx";
@@ -30,6 +31,7 @@ export default function App() {
       <Grain />
       <CustomCursor />
       <div className="gn-progress" style={{ width: `${progress}%` }} />
+      <BackToTop />
       <MobileNav activeId={activeId} />
       <div className="gn-shell">
         <Sidebar activeId={activeId} roleText={roleText} collapsed={collapsed} onToggle={toggleSidebar} />

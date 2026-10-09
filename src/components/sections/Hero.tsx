@@ -1,4 +1,4 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, FileText } from "lucide-react";
 import { CONTACT, ROLES, STATS, type Stat as StatData } from "../../data.ts";
 import { useCountUp, useReveal, useTypewriter } from "../../hooks.ts";
 import { Reveal } from "../common/Reveal.tsx";
@@ -37,6 +37,7 @@ export function Hero() {
         <div className="gn-hero-ctas">
           <a className="gn-btn gn-btn-primary" href="#work">View the work <ArrowUpRight size={16} /></a>
           <a className="gn-btn gn-btn-ghost" href={`mailto:${CONTACT.email}`}>Get in touch</a>
+          <a className="gn-btn gn-btn-ghost" href="/resume">View resume <FileText size={16} /></a>
         </div>
         <div className="gn-stats" ref={statsRef}>
           {STATS.map((s) => (

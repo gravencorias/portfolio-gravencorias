@@ -55,7 +55,32 @@ export interface Contact {
   phone: string;
   github: string;
   linkedin: string;
+  website: string;
   location: string;
+}
+
+export interface ResumeProfile {
+  title: string;
+  focus: string;
+  summary: string;
+  pdf: string;
+}
+
+export interface ResumeSkillGroup {
+  label: string;
+  items: string[];
+}
+
+export interface ResumeRole {
+  title: string;
+  period: string;
+  org: string;
+  bullets: string[];
+}
+
+export interface ResumeWork {
+  title: string;
+  detail: string;
 }
 
 export const ROLES: string[] = [
@@ -71,12 +96,12 @@ export const STATS: Stat[] = [
 ];
 
 export const SKILLS: Skill[] = [
-  { label: "Odoo ERP / Python", percent: 90 },
+  { label: "Odoo ERP / Python", percent: 95 },
   { label: ".NET Core / C#", percent: 90 },
   { label: "Git / Version Control", percent: 90 },
   { label: "QA / Software Testing", percent: 90 },
   { label: "React / React Native", percent: 60 },
-  { label: "Django REST / FastAPI", percent: 60 },
+  { label: "Django REST / FastAPI", percent: 70 },
 ];
 
 export const TECH_TAGS: string[] = [
@@ -220,5 +245,93 @@ export const CONTACT: Contact = {
   phone: "+63 946 412 5195",
   github: "https://github.com/gravencorias",
   linkedin: "https://www.linkedin.com/in/graven-niel-corias-452092333",
+  website: "https://portfolio-gravencorias.netlify.app",
   location: "Davao City, Philippines",
 };
+
+// /resume page. The downloadable PDF is rendered from it: run `npm run resume:pdf` after editing.
+export const RESUME_PROFILE: ResumeProfile = {
+  title: "Full-Stack Software Developer",
+  focus: "React, ASP.NET Core, Python & Odoo ERP",
+  summary:
+    "Full-stack software developer with 4+ years of professional experience building production ERP and internal business applications for a government utility, plus 1+ year in software quality assurance and testing. Backend strength in Python/Odoo and C#/ASP.NET Core, with frontend experience in React and TypeScript. Experienced in REST APIs, PostgreSQL, business-process automation, system integration, debugging, testing, and translating complex operational rules into maintainable software.",
+  pdf: "/assets/Graven_Niel_Corias_CV.pdf",
+};
+
+export const RESUME_SKILLS: ResumeSkillGroup[] = [
+  { label: "Languages", items: ["C#", "Python", "TypeScript/JavaScript", "SQL", "XML"] },
+  { label: "Backend & APIs", items: ["ASP.NET Core", "EF Core", "Odoo ERP Framework", "Django REST Framework", "FastAPI", "Odoo Controllers", "RESTful APIs"] },
+  { label: "Frontend", items: ["React", "TypeScript", "Vite", "Tailwind CSS", "Ant Design", "HTML", "CSS", "QWeb"] },
+  { label: "Data & Integration", items: ["PostgreSQL", "relational data modeling", "Axios", "API integration"] },
+  { label: "State, Testing & Tools", items: ["TanStack Query", "Zustand", "Git", "functional/regression testing", "debugging", "QA practices"] },
+];
+
+export const RESUME_EXPERIENCE: ResumeRole[] = [
+  {
+    title: "Sr. Computer Services Programmer — Full-Stack / ERP Developer",
+    period: "Dec 2021 – Present",
+    org: "Davao City Water District, Davao City, Philippines",
+    bullets: [
+      "Engineer and maintain custom Odoo ERP modules covering business logic, workflows, validations, reports, access controls, and XML/QWeb interfaces for core utility operations.",
+      "Design and integrate RESTful APIs and backend services using ASP.NET Core, Odoo controllers, Django REST Framework, and FastAPI to connect enterprise modules and internal applications.",
+      "Build React and TypeScript interfaces for internal business workflows, integrating APIs and applying modern client-side data and state-management patterns.",
+      "Translate department requirements into data models, business rules, API contracts, validation flows, and maintainable end-user workflows.",
+      "Troubleshoot, refactor, and validate production code with stakeholders and QA personnel to improve correctness, maintainability, and performance.",
+    ],
+  },
+  {
+    title: "Records Assistant / Quality Assurance / Software Tester",
+    period: "Jul 2020 – Nov 2021",
+    org: "Davao City Water District, Davao City, Philippines",
+    bullets: [
+      "Performed functional, regression, and business-rule testing for internal applications and documented reproducible defects before release.",
+      "Validated bug fixes and new features against user requirements, coordinating with developers throughout the defect-resolution cycle.",
+      "Maintained data accuracy and record integrity, strengthening attention to data quality and edge cases later applied to software development work.",
+    ],
+  },
+  {
+    title: "OJT Web Developer / Technical Support Group",
+    period: "Jun 2019 – Oct 2019",
+    org: "Davao City Water District, 500 hours",
+    bullets: [
+      "Assisted in the development and maintenance of internal web applications, including the COC & CTO Web Application and Phone Directory Application.",
+      "Provided application and technical support to end users, troubleshooting software and system issues.",
+    ],
+  },
+];
+
+export const RESUME_WORK: ResumeWork[] = [
+  {
+    title: "Payroll & HR ERP Workflows",
+    detail: "Developed and maintained payroll-related business logic, payslip-generation workflows, reporting/export functionality, and employee/attendance integrations across ERP and supporting web/API components.",
+  },
+  {
+    title: "ERP & Internal API Integration",
+    detail: "Built and consumed REST endpoints across Odoo/Python and ASP.NET Core services to connect modules and internal applications while keeping business rules centralized and testable.",
+  },
+  {
+    title: "Indoor Environmental Quality Monitoring System",
+    detail: "IoT capstone combining Arduino sensors, a custom API, and an Android Studio mobile application for real-time indoor-condition monitoring; recognized as Best Capstone Project 1st Runner-Up.",
+  },
+];
+
+export const RESUME_EDUCATION: EducationItem[] = [
+  {
+    degree: "Bachelor of Science in Information Technology",
+    status: "Graduated",
+    school: "Holy Cross of Davao College",
+    location: "Davao City, Philippines",
+  },
+];
+
+export const RESUME_CERTIFICATIONS: string[] = [
+  "In-Depth Testing Management Techniques for ICTD Personnel — Davao City Water District, Dec 2023",
+  "Career Service Examination, Professional Level — Passed",
+  "IoT: Arduino Workshop (2-day) — Holy Cross of Davao College, Mar 2019",
+];
+
+export const RESUME_LEADERSHIP: string[] = [
+  "Outstanding Student Leader — College of Engineering and Technology, SY 2018–2019",
+  "President, Information Technology Society, SY 2018–2019",
+  "Best Capstone Project — 1st Runner-Up",
+];

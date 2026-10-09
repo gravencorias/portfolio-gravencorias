@@ -18,6 +18,8 @@
   --font-mono: "JetBrains Mono", "IBM Plex Mono", monospace;
   --sidebar-w: 320px;
   --sidebar-rail: 76px;
+  --totop-size: 46px;
+  --totop-inset: clamp(1rem, 3vw, 1.5rem);
 }
 
 .gn-root { --sidebar-current: var(--sidebar-w); }
@@ -456,6 +458,7 @@ html, body {
   gap: 0.5rem;
   padding: 0.85rem 1.4rem;
   border-radius: 7px;
+  font-family: inherit;
   font-size: 0.88rem;
   font-weight: 600;
   text-decoration: none;
@@ -473,6 +476,7 @@ html, body {
   box-shadow: 0 10px 34px -8px var(--accent-glow);
 }
 .gn-btn-ghost {
+  background: transparent;
   border-color: var(--line-strong);
   color: var(--ink);
 }
@@ -658,9 +662,7 @@ html, body {
   align-items: start;
   padding: 1.5rem 0;
   border-top: 1px solid var(--line);
-  transition: padding-left 0.3s ease;
 }
-.gn-ledger-row:hover { padding-left: 0.4rem; }
 .gn-ledger-row:last-child { border-bottom: 1px solid var(--line); }
 .gn-ledger-num {
   font-family: var(--font-mono);
@@ -981,6 +983,10 @@ html, body {
   flex-shrink: 0;
 }
 .gn-mini-card {
+  display: grid;
+  grid-template-columns: 2.6rem 1fr; /* number column, same as .gn-edu-row */
+  gap: 1.2rem;
+  align-items: baseline;
   padding: 0.95rem 0;
   border-top: 1px solid var(--line);
 }
@@ -996,6 +1002,19 @@ html, body {
   font-size: 0.68rem;
   color: var(--ink-faint);
 }
+
+/* hover slide for the list rows (Experience, Education, Honors, Affiliations, Training).
+   Ledger and edu rows are also .gn-reveal, so the list repeats its fade-in transitions. */
+.gn-ledger-row,
+.gn-edu-row,
+.gn-award-row,
+.gn-mini-card {
+  transition: padding-left 0.3s ease, opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+.gn-ledger-row:hover,
+.gn-edu-row:hover,
+.gn-award-row:hover,
+.gn-mini-card:hover { padding-left: 0.4rem; }
 
 /* ---------- connect ---------- */
 .gn-connect {
@@ -1019,12 +1038,49 @@ html, body {
 }
 .gn-footer {
   padding: 1.6rem clamp(1.75rem, 5vw, 5rem);
+  padding-right: calc(var(--totop-size) + 2 * var(--totop-inset)); /* keep the copyright clear of the back-to-top button */
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-family: var(--font-mono);
   font-size: 0.72rem;
   color: var(--ink-faint);
+}
+
+/* ---------- back to top ---------- */
+.gn-totop {
+  position: fixed;
+  right: var(--totop-inset);
+  bottom: var(--totop-inset);
+  z-index: 50; /* above .gn-main, under the mobile menu (55) and lightbox (200) */
+  display: grid;
+  place-items: center;
+  width: var(--totop-size);
+  height: var(--totop-size);
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  background: rgba(18, 19, 25, 0.85);
+  backdrop-filter: blur(6px);
+  color: var(--ink);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s cubic-bezier(0.16,1,0.3,1), border-color 0.25s ease, color 0.25s ease;
+}
+.gn-totop.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+.gn-totop.is-visible:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.gn-totop:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 /* ---------- responsive ---------- */
@@ -1075,4 +1131,260 @@ html, body {
   .gn-frame { max-width: 360px; margin: 0 auto; }
   .gn-ledger-row { grid-template-columns: 2rem 1fr; }
   .gn-ledger-period { grid-column: 2; }
+  .gn-footer { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+}
+
+/* ---------- /resume page ---------- */
+/* A light, US Letter "paper" sheet on the dark ground. Sizes inside the sheet are in em
+   off its 9.5pt base so the phone layout can scale them all at once. */
+.gn-resume {
+  min-height: 100vh;
+  background: var(--ground);
+}
+
+.gn-resume-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem clamp(1rem, 4vw, 2.5rem);
+  background: rgba(10, 11, 14, 0.88);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.gn-resume-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--ink-dim);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  transition: color 0.2s ease;
+}
+.gn-resume-back:hover { color: var(--accent); }
+.gn-resume-file {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-faint);
+}
+.gn-resume-actions {
+  display: flex;
+  gap: 0.6rem;
+}
+.gn-btn-sm {
+  padding: 0.6rem 1rem;
+  font-size: 0.8rem;
+}
+
+.gn-resume-stage {
+  padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 4vw, 2.5rem) 4rem;
+}
+
+.gn-resume-sheet {
+  --paper: #FFFFFF;
+  --paper-ink: #17181D;
+  --paper-body: #383A42;
+  --paper-dim: #6A6C76;
+  --paper-rule: #E2DED6;
+  --paper-accent: #9A6526; /* darker --accent; ~4.9:1 on white */
+  max-width: 8.5in;
+  min-height: 11in;
+  margin: 0 auto;
+  padding: 0.55in 0.68in;
+  background: var(--paper);
+  color: var(--paper-body);
+  font-family: var(--font-body);
+  font-size: 9.5pt;
+  line-height: 1.5;
+  border-radius: 3px;
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.7);
+}
+.gn-resume-sheet ::selection { background: var(--accent-soft); color: var(--paper-ink); }
+.gn-resume-sheet a {
+  color: inherit;
+  text-decoration: none;
+}
+.gn-resume-sheet a:hover {
+  color: var(--paper-accent);
+  text-decoration: underline;
+}
+
+.gn-resume-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 1.5em;
+  padding-bottom: 1.1em;
+  border-bottom: 1.5pt solid var(--paper-ink);
+}
+.gn-resume-name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 2.95em;
+  line-height: 0.95;
+  /* tight tracking closes the word gaps in the PDF text layer ("GravenNiel", "M.Corias") */
+  letter-spacing: -0.01em;
+  word-spacing: 0.08em;
+  color: var(--paper-ink);
+}
+.gn-resume-name span {
+  display: block;
+  color: var(--paper-accent);
+}
+.gn-resume-title {
+  margin-top: 0.75em;
+  font-size: 1.1em;
+  font-weight: 600;
+  color: var(--paper-ink);
+}
+.gn-resume-focus {
+  margin-top: 0.1em;
+  font-family: var(--font-mono);
+  font-size: 0.84em;
+  color: var(--paper-accent);
+}
+.gn-resume-contact {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+  color: var(--paper-body);
+}
+.gn-resume-contact li {
+  display: flex;
+  flex-direction: row-reverse; /* icon on the right edge, text right-aligned */
+  align-items: center;
+  gap: 0.6em;
+}
+.gn-resume-contact svg {
+  flex: none;
+  color: var(--paper-accent);
+}
+
+.gn-resume-block { margin-top: 1.35em; }
+.gn-resume-h {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+  margin-bottom: 0.65em;
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+  font-weight: 600;
+  letter-spacing: 0.08em; /* wider and PDF text extraction reads "S U M M A R Y" */
+  text-transform: uppercase;
+  color: var(--paper-accent);
+  break-after: avoid;
+}
+.gn-resume-h::after {
+  content: "";
+  flex: 1;
+  border-top: 0.75pt solid var(--paper-rule);
+}
+
+.gn-resume-summary { color: var(--paper-body); }
+
+.gn-resume-skills > div {
+  display: grid;
+  grid-template-columns: 11.5em 1fr;
+  gap: 1em;
+  padding: 0.12em 0;
+}
+.gn-resume-skills dt {
+  font-weight: 600;
+  color: var(--paper-ink);
+}
+
+.gn-resume-entry + .gn-resume-entry { margin-top: 0.95em; }
+.gn-resume-entry-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1em;
+  break-after: avoid;
+}
+.gn-resume-entry-head h3 {
+  font-size: 1.07em;
+  font-weight: 600;
+  color: var(--paper-ink);
+}
+.gn-resume-meta {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+}
+.gn-resume-sub {
+  font-size: 0.93em;
+  font-style: italic;
+  color: var(--paper-dim);
+  break-after: avoid;
+}
+
+.gn-resume-bullets {
+  list-style: none;
+  margin-top: 0.35em;
+}
+.gn-resume-bullets li {
+  position: relative;
+  padding-left: 1.25em;
+  break-inside: avoid;
+}
+.gn-resume-bullets li + li { margin-top: 0.2em; }
+.gn-resume-bullets li::before {
+  content: "";
+  position: absolute;
+  left: 0.15em;
+  top: 0.75em;
+  width: 0.55em;
+  border-top: 1.2pt solid var(--paper-accent);
+}
+.gn-resume-bullets b {
+  font-weight: 600;
+  color: var(--paper-ink);
+}
+
+@media screen and (max-width: 720px) {
+  .gn-resume-file { display: none; }
+  .gn-resume-sheet {
+    min-height: 0;
+    padding: 1.75rem 1.25rem;
+    font-size: 13.5px;
+  }
+  .gn-resume-head { grid-template-columns: 1fr; }
+  .gn-resume-contact li { flex-direction: row; }
+  .gn-resume-contact a { overflow-wrap: anywhere; }
+  .gn-resume-skills > div { grid-template-columns: 1fr; gap: 0; padding: 0.3em 0; }
+  .gn-resume-entry-head { flex-direction: column; gap: 0.1em; }
+}
+@media screen and (max-width: 460px) {
+  .gn-resume-back span { display: none; }
+}
+
+/* margins match the original Word CV */
+@page {
+  size: letter;
+  margin: 0.55in 0.68in;
+}
+@media print {
+  html:has(.gn-resume),
+  html:has(.gn-resume) body { background: #fff; }
+  .gn-resume { min-height: 0; background: none; }
+  .gn-resume-toolbar,
+  .gn-totop { display: none; }
+  .gn-resume-stage { padding: 0; }
+  .gn-resume-sheet {
+    max-width: none;
+    min-height: 0;
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
 }
